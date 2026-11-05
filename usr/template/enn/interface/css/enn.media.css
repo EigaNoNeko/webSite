@@ -1,0 +1,344 @@
+@media (max-width: 500px) {
+	.not-mobile { display: none; }
+
+	header.top-header .form-search { display: none; }
+	header.top-header .open-menu-btn { display: none; }
+
+	.catalogue-header .catalogue-banner .list-catalogue-user-action ul { overflow: auto; }
+	.catalogue-header .catalogue-banner .list-catalogue-stream-plateform ul { overflow: auto; }
+	.enn-main-catalogue .catalogue-menu-onglet ul { overflow: auto; }
+
+	.catalogue-header .catalogue-banner .list-catalogue-user-action ul:nth-child(2) a span.text { display: none; }
+	.catalogue-header .catalogue-banner .list-catalogue-user-action ul { justify-content: center; }
+	.catalogue-header .catalogue-banner .list-catalogue-user-action a { justify-content: center; }
+
+	header.left-header {
+		width: 90%;
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch ul { overflow:auto; }
+	.enn-main-home.list-subject-watchs .item-subject-watch ul li {
+		flex: none;
+		width: calc(100% / 2.1);
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch.item-subject-blog ul li {
+		flex: none;
+		width: calc(100% / 1.1);
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch ul.wrap {
+		flex-wrap: wrap;
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch ul.wrap li {
+		flex: none;
+		width: calc(100% / 2);
+	}
+
+	.contenaire-player-info {
+		padding: calc(var(--padding-lr-header) / 2);
+	}
+
+	.enn-main-catalogue .catalogue-list-watchs li a {
+		display: flex;
+		align-items: center;
+	}
+
+	.enn-main-catalogue .catalogue-list-watchs li .min {
+		margin-right: 16px;
+	}
+
+	.enn-main-catalogue .catalogue-list-watchs li img {
+		width: 128px;
+	}
+
+
+
+	.enn-main-home .banner-homepage .banner-buttons-controls {
+		position: absolute;
+		top: 0;
+		right: 50%;
+		bottom: auto;
+
+		transform: translateX(50%);
+
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.enn-main-home .banner-homepage .all-banner .banner-item::before { background: linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, transparent 100%); }
+	.enn-main-home .banner-homepage .all-banner .banner-item-content li { width: 100%; }
+	.enn-main-home .banner-homepage .all-banner .banner-item-content a.enn-button { justify-content: center; }
+}
+
+@media (min-width: 500px) {
+	:root {
+		--width-header: 240px;
+		--marg-width-header: 0px;
+	}
+
+	footer .social {
+		display: flex;
+		align-items: center;
+
+		justify-content: space-between;
+	}
+
+	header.top-header .responsive { display: block; }
+	header.top-header .open-menu-btn { display: none; }
+
+	header.top-header .not-responsive { display: none; }
+
+	header.top-header .form-search { display: none; }
+
+	.not-desktop { display: none; }
+
+
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 280px;
+	}
+}
+
+@media (min-width: 800px) {
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 380px;
+	}
+
+	.enn-main-catalogue .catalogue-community .content {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.catalogue-list-characters ul { display: flex; }
+	.catalogue-list-characters ul li {
+		width: calc(100% / 2 - 16px);
+		margin-left: 4px;
+		margin-right: 4px;
+	}
+}
+
+@media (min-width: 900px) {
+
+	.catalogue-header .catalogue-banner .min span.shadow,
+	.catalogue-header .catalogue-banner .min img {
+		height: 280px;
+	}
+
+	.catalogue-header .catalogue-banner .list-catalogue-user-action ul { overflow: auto; }
+	.catalogue-header .catalogue-banner .list-catalogue-stream-plateform ul { overflow: auto; }
+
+	.enn-main-home.list-subject-watchs .item-subject-watch ul { overflow:auto; }
+	.enn-main-home.list-subject-watchs .item-subject-watch ul li {
+		flex: none;
+		width: calc(100% / 4.1);
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch ul.wrap {
+		flex-wrap: wrap;
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch ul.wrap li {
+		flex: none;
+		width: calc(100% / 4);
+	}
+
+	.enn-main-catalogue .catalogue-list-watchs ul {
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.enn-main-catalogue .catalogue-list-watchs li .min {
+		margin-bottom: 8px;
+	}
+
+	.enn-main-catalogue .catalogue-list-saisons ul {
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.catalogue-user-action { max-width: 500px; }
+
+	.catalogue-user-action a.enn-button {
+		border: solid 1px rgba(70, 70, 70, .2);
+		background: rgba(35, 35, 35, .4);
+		backdrop-filter: blur(8px);
+	}
+
+	.catalogue-user-action a.enn-button.actif {
+		border: solid 1px rgba(120, 120, 120, .2);
+		background: rgba(100, 100, 100, .4);
+	}
+
+	/*.catalogue-user-action a.enn-button.enn-button-cta {
+		border: solid 1px rgba(246, 192, 24, .8);
+		background: rgba(246, 192, 24, .76);
+		backdrop-filter: blur(10px);
+	}*/
+
+
+
+	.article-blog-page .blog-content {
+		padding-left: 92px;
+		padding-right: 92px;
+	}
+
+	.grid-2x100 {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (min-width: 800px) {
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 420px;
+	}
+}
+
+@media (min-width: 1080px) {
+	.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+	.grid5 { display: grid; grid-template-columns: repeat(5, 1fr); }
+	.grid7 { display: grid; grid-template-columns: repeat(7, 1fr); }
+
+	:root {
+		--padding-mega-block: 48px;
+	}
+
+	header.top-header .form-search { display: block; }
+
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 480px;
+	}
+
+	.enn-main-archives {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+	}
+
+	.enn-main-archives .enn-main-home.list-subject-watchs .item-subject-watch ul {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.enn-main-home.list-subject-watchs .item-subject-watch ul {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+	}
+
+	.enn-main-home.list-subject-watchs .item-subject-watch.item-subject-blog ul {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+	.enn-main-home.list-subject-watchs .item-subject-watch.item-subject-continue-watching ul {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.enn-main-home.list-subject-watchs .item-subject-watch ul li {
+		flex: none;
+		width: 100%;
+	}
+
+	.enn-main-home.list-subject-watchs .item-subject-watch ul.wrap li {
+		flex: none;
+		width: 100%;
+	}
+
+
+	.catalogue-header .catalogue-banner .min img { height: 480px; }
+	
+	.catalogue-header .catalogue-banner .content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		padding: 16px;
+	}
+
+	.catalogue-header .catalogue-banner .min span.shadow {
+		height: 100%;
+		width: 100%;
+		right: 0;
+		left: auto;
+		background: linear-gradient(50deg,rgba(0, 0, 0, 1) 0%, transparent 70%);
+		display: block;
+	}
+	
+	.catalogue-header .catalogue-banner .content .text {
+		position: relative;
+
+		width: 40%;
+	}
+
+	.enn-main-catalogue .catalogue-about .content {
+		padding: 16px;
+
+		display: flex;
+	}
+}
+
+@media (min-width: 1280px) {
+	header.top-header .responsive { display: none; }
+
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 550px;
+	}
+
+
+	/* */
+	body.watching { background: #000; }
+	.player-video {
+		display: flex;
+	}
+	.player-video .contenaire-player-data { width: calc(100%); }
+	.player-video .player-info { width: 480px; display: none; }
+
+	.player-video .contenaire-player-data { width: calc(100% - 480px); }
+	.player-video .player-info { width: 480px; display: block; }
+
+	.player-video .player-info {
+		padding: 32px;
+		padding-top: 0;
+	}
+}
+
+@media (min-width: 1300px) {
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 550px;
+	}
+}
+
+@media (min-width: 1600px) {
+	:root {
+		--color-primary-1: rgba(5, 5, 5);
+		--color-primary-2: rgba(20, 20, 20);
+		--color-primary-3: rgba(35, 35, 35);
+
+		--width-window: 1360px;
+		--padding-mega-block: 64px;
+		--padding-window-lr: 0px;
+		--padding-lr-header: 32px;
+
+		--width-header: 240px;
+		--marg-width-header: var(--width-header);
+	}
+
+	.not-fullscreen.not-mobile.not-responsive,
+	header.top-header .open-menu-btn,
+	.not-fullscreen { display: none; }
+
+	.enn-main-home .banner-homepage .all-banner .banner-item {
+		height: 500px;
+	}
+
+	.enn-main-home .banner-homepage .all-banner .banner-item-content {
+		amargin: 64px;
+	}
+
+	/* */
+	.catalogue-header .catalogue-banner .min img { height: 600px; }
+	.catalogue-header .catalogue-banner .list-catalogue-user-action ul { display: flex; }
+}
+
+@media (min-width: 0px) {
+	body.watching :root {
+		--height-header: 0px;
+		--width-header: 0px;
+		--marg-width-header: 0px;
+	}
+
+	.watching header.top-header { display: none; }
+	.watching header.left-header { left: -100%; }
+}

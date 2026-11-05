@@ -1,0 +1,122 @@
+ul.enn-kit-ul-horizon {
+	display: flex;
+	align-items: center;
+}
+
+.enn-kit-mgb { margin-bottom: 16px; }
+
+.enn-kit-block-background {
+	background-color: var(--color-primary-2);
+}
+
+.enn-kit-block-style .head {
+	padding: 16px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+
+.enn-kit-visionneuse-photo {
+	z-index: 99999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: rgba(0, 0, 0, 0.6);
+
+	animation: visibleVisionneuse 0.3s linear;
+}
+
+.enn-kit-visionneuse-photo img {
+	max-width: 60%;
+	max-height: 60%;
+
+	object-fit: contain;
+
+	animation: visibleVisionneuseImg 0.1s linear;
+}
+
+@keyframes visibleVisionneuse {
+	from { background:rgba(0, 0, 0, 0.0); }
+	to { background:rgba(0, 0, 0, 0.6); }
+}
+
+@keyframes visibleVisionneuseImg {
+	from { transform: scale(0.2); }
+	to { transform: scale(1.0); }
+}
+
+
+
+.enn-kit-form {
+	width: 100%;
+}
+
+.enn-kit-input-margin {
+	margin-top: 16px;
+}
+
+.enn-kit-input {
+	position: relative;
+
+	width: 100%;
+}
+
+.enn-kit-input label {
+	position: absolute;
+	top: 11px;
+	left: 16px;
+}
+
+.enn-kit-input select,
+.enn-kit-input textarea,
+.enn-kit-input input {
+	display: block;
+
+	border: solid 1px rgba(180, 180, 180);
+
+	background-color: var(--color-primary-2);
+	color: #fff;
+
+	padding: 15px 14px;
+	padding-top: 31px;
+
+	width: 100%;
+}
+
+.enn-kit-input-submit input {
+	display: block;
+
+	border: none;
+
+	background-color: var(--color-primary-3);
+	color: #fff;
+
+	padding: 16px 12px;
+
+	width: 100%;
+
+	cursor: pointer;
+
+	font-weight: 500;
+	font-size: 14px;
+	letter-spacing: 0.03em;
+}
+
+.enn-kit-input-submit input:hover {
+	background-color: var(--color-primary-1);
+}
+
+.enn-kit-input textarea {
+	height: 128px;
+	resize: none;
+}

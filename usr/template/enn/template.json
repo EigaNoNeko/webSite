@@ -1,0 +1,83 @@
+{
+	"thumbnail": "https://zupimages.net/up/25/07/6lnm.png",
+	"name": "Eiga No Neko - Ultra Edition",
+	"author": "julie@floagg.org",
+	"install": {
+		"metadate": {
+			"package": "enn",
+			"title": "Eiga No Neko - Straming d'animes en VO et VOST"
+		},
+		"database": {
+			"server": "MySql",
+			"username": "root",
+			"password": "OmsyRootac49719216a09be0",
+			"host": "127.0.0.1",
+			"dbname": "sql_eiganoneko_c"
+		},
+		"rewrite": [
+			{"path":"catalogue/([A-z0-9_-]+)", "rewrite":"/catalogue_single"},
+			{"path":"catalogue/([A-z0-9_-]+)/([A-z]+)", "rewrite":"/catalogue_single"},
+			
+			{"path":"watch/([A-z0-9_-]+)", "rewrite":"/watch"},
+			{"path":"watch/([A-z0-9_-]+)/([A-z0-9_-]+)", "rewrite":"/watch"},
+
+			{"path":"blog/([A-z0-9_-]+)/([A-z0-9_-]+)", "rewrite":"/single"},
+
+			{"path":"switchAccount", "rewrite": "/switch_account"},
+			{"path":"my", "rewrite": "/account"}
+		],
+		"plugin": [
+			{
+				"id": "omsyBlog",
+				"name": "omsyBlog",
+				"package": "//depot.floagg.com/plugi@omsyBlog"
+			},
+			{
+				"id": "EigaNoNeko",
+				"name": "EigaNoNeko",
+				"package": "//depot.floagg.com/plugi@EigaNoNeko"
+			},
+			{
+				"id": "omsyPage",
+				"name": "omsyPage",
+				"package": "//depot.floagg.com/plugi@omsyPage"
+			}
+		],
+		"robots": [
+			"User-agent: *",
+			"Disallow: /watch/",
+			"Disallow: /panel/",
+			"Disallow: /catalogue/*/reports",
+			"Allow: /api/omsyBlog/sitemaps",
+			"Allow: /api/EigaNoNeko/v2/sitemaps",
+			"Sitemap: https://eiganoneko.com/api/omsyBlog/sitemaps",
+			"Sitemap: https://eiganoneko.com/api/EigaNoNeko/v2/sitemaps"
+		],
+		"manifest": {
+			"name": "Eiga no Neko",
+			"short_name": "EigaNeko",
+			"description": "Application mobile Eiga no Neko",
+			"start_url": "/",
+			"scope": "/",
+			"display": "standalone",
+			"orientation": "portrait",
+			"background_color": "#000000",
+			"theme_color": "#000000",
+			"lang": "fr",
+			"icons": [
+				{
+					"src": "/interface/img/enn.png",
+					"sizes": "192x192",
+					"type": "image/png",
+					"purpose": "any maskable"
+				},
+				{
+					"src": "/interface/img/enn.png",
+					"sizes": "512x512",
+					"type": "image/png",
+					"purpose": "any maskable"
+				}
+			]
+		}
+	}
+}
