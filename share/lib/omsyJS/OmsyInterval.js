@@ -22,13 +22,9 @@ const omsyInterval = new class OmsyTimeInterval {
 		}) */
 		let i = 0
 		const max = Object.keys(this.intervalRequestArrayCurrent).length
-		if(max > 0)
-			document.querySelector('body').classList.add('load-fetch')
+		if(max > 0) document.querySelector('body').classList.add('load-fetch')
 			
 		Object.keys(this.intervalRequestArrayCurrent).forEach((name) => {
-		    console.log(this.intervalRequestArrayCurrent)
-		    
-			console.log(this.intervalRequestArrayCurrent[name].url, name)
 			request(
 				this.intervalRequestArrayCurrent[name].url,
 				this.intervalRequestArrayCurrent[name].object,
@@ -45,8 +41,7 @@ const omsyInterval = new class OmsyTimeInterval {
 				}
 
 				this.intervalRequestArrayCurrent[name].function(res)
-			})	
-			console.log(max, i)	
+			})
 		})
 	}
 

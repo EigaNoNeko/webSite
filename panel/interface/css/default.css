@@ -1,0 +1,70 @@
+:root {
+	--color-blue: #0070F5;
+
+	--color-header-black1: #1b1b1b; /* Dark 1 */
+	--color-header-black2: #282828; /* Dark 2 */
+	--color-header-black3: #1e1f20; /* Dark 3 */
+	--color-header-black4: rgba(24, 24, 24);
+
+	--color-body-border: rgba(220, 220, 220);
+	--color-body-hover: rgba(240, 240, 240);
+	--color-body-button-hover: rgba(220, 220, 220);
+
+	--color-header-text: #fff;
+
+	--height-bottomHeader: 54px;
+	--width-leftHeader: 340px;
+}
+
+
+
+.header-padding-lr {
+	padding-left: 32px;
+	padding-right: 32px;
+}
+
+header {
+	z-index: 999;
+	position: fixed;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	overflow: auto;
+
+	background-color: var(--color-header-black1);
+	color: var(--color-header-text);
+	fill: var(--color-header-text);
+}
+
+main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	min-height: 100%;
+
+	padding-bottom: calc(var(--height-bottomHeader) * 2);
+	margin-left: var(--width-leftHeader);
+	
+
+	background-color: #fff;
+	color: #000;
+	fill: #000;
+}
+
+
+
+/*  */
+header.left-header {
+	top: 0;
+	bottom: var(--height-bottomHeader);
+	width: var(--width-leftHeader);
+
+	flex-direction: column;
+	align-items: flex-start;
+
+	padding-bottom: 0;
+}

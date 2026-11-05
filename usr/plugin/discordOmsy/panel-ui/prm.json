@@ -1,0 +1,14 @@
+{
+	"members": {
+		"name": "Liste des membres",
+		"prm": "00000307"
+	},
+	"roles": {
+		"name": "Liste des roles",
+		"prm": "00000307"
+	},
+	"channels": {
+		"name": "Liste des salons",
+		"prm": "00000307"
+	}
+}

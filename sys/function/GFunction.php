@@ -1,40 +1,25 @@
 <?php
 class GFunction {
     private $CMS;
+
+    private $seedString = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
     function __construct($CMS){
         $this->CMS = $CMS;
-    }
-    
-    public function RandomString($length = 10) {
-        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
-    }
-    public function RandomCode($length = 10) {
-        return substr(str_shuffle(str_repeat($x='0123456789', ceil($length/strlen($x)) )),1,$length);
+
+        $CMS->addModule('OmsyString');
+        $CMS->addModule('OmsyJSON');
     }
 
-    public function slugify($text, string $divider = '-') {
-      $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
-      $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-      $text = preg_replace('~[^-\w]+~', '', $text);
-      $text = trim($text, $divider);
-      $text = preg_replace('~-+~', $divider, $text);
-      $text = strtolower($text);
-      if (empty($text)) {
-        return 'n-a';
-      }
-      return $text;
-    }
+    function getSeed() { return $this->seedString; }
 
-    public function web_substr($string, $int = 255, $end = "...") {
-        if(strlen($string) >= $int)
-            $string = substr($string, 0, $int).$end ;
-        return $string;
-    }
-
-    public function htmlDecode($string) {
-        $string = html_entity_decode(htmlspecialchars_decode($string));
-        return html_entity_decode($string, ENT_QUOTES, 'UTF-8');
-    }
+    public function slugify($text, string $divider = '-') { return __OmsyString->slugify($text, $divider); }
+    public function webSubstr($string, $int = 255, $end = "...") { return __OmsyString->subStr($string, $int, $end); }
+    public function web_substr($string, $int = 255, $end = "...") { return __OmsyString->subStr($string, $int, $end); }
+    public function htmlDecode($string) { return __OmsyString->htmlDecode($string); }
+    public function RandomString($length = 10) { return __OmsyString->rand($length); }
+    public function RandomCode($length = 10) { return __OmsyString->rand($length, '0123456789'); }
+    public function jsonDecode($string) { return __OmsyJSON->decode($string); }
 
     public function is_bot($str = null) {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -73,64 +58,62 @@ class GFunction {
         return true;
     }
 
-    public function convert_date($datetimeStr) {
-    if (!$datetimeStr) return "Date vide";
+    // ChatGPT ??
+    public function convertDate($datetimeStr, $started = 'Il y a ') {
+        if (!$datetimeStr) return "Unknow";
 
-    // Création de l'objet DateTime avec fuseau Europe/Paris
-    $date = DateTime::createFromFormat('Y-m-d H:i:s', $datetimeStr, new DateTimeZone('UTC'));
+        $date = DateTime::createFromFormat('Y-m-d H:i:s', $datetimeStr, new DateTimeZone('UTC'));
+        $date->setTimezone(new DateTimeZone('Europe/Paris'));
+        if (!$date) {
+            return "Format de date invalide";
+        }
 
-    // Puis on la convertit en Europe/Paris
-    $date->setTimezone(new DateTimeZone('Europe/Paris'));
-    if (!$date) {
-        return "Format de date invalide";
+        $now = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $diffInSeconds = abs($now->getTimestamp() - $date->getTimestamp());
+
+        // Gérer le passé uniquement
+        if ($diffInSeconds < 0) return "Unknow";
+
+        if ($diffInSeconds < 60) return "$started$diffInSeconds seconde" . ($diffInSeconds > 1 ? "s" : "");
+
+        $diffInMinutes = floor($diffInSeconds / 60);
+        if ($diffInMinutes < 60) return "$started$diffInMinutes minute" . ($diffInMinutes > 1 ? "s" : "");
+
+        $diffInHours = floor($diffInMinutes / 60);
+        if ($diffInHours < 24) return "$started$diffInHours heure" . ($diffInHours > 1 ? "s" : "");
+
+        $diffInDays = floor($diffInHours / 24);
+        if ($diffInDays <= 7) return "$started$diffInDays jour" . ($diffInDays > 1 ? "s" : "");
+
+        $jours = [
+            'Sunday' => 'Dimanche',
+            'Monday' => 'Lundi',
+            'Tuesday' => 'Mardi',
+            'Wednesday' => 'Mercredi',
+            'Thursday' => 'Jeudi',
+            'Friday' => 'Vendredi',
+            'Saturday' => 'Samedi'
+        ];
+        $mois = [
+            'January' => 'Janvier',
+            'February' => 'Février',
+            'March' => 'Mars',
+            'April' => 'Avril',
+            'May' => 'Mai',
+            'June' => 'Juin',
+            'July' => 'Juillet',
+            'August' => 'Août',
+            'September' => 'Septembre',
+            'October' => 'Octobre',
+            'November' => 'Novembre',
+            'December' => 'Décembre'
+        ];
+
+        $jour = $jours[$date->format('l')] ?? $date->format('l');
+        $moisNom = $mois[$date->format('F')] ?? $date->format('F');
+
+        return "$jour, " . $date->format('j') . " $moisNom " . $date->format('Y');
     }
-
-    $now = new DateTime('now', new DateTimeZone('Europe/Paris'));
-    $diffInSeconds = $now->getTimestamp() - $date->getTimestamp();
-
-    // Gérer le passé uniquement
-    if ($diffInSeconds < 0) {
-        return "Dans le futur";
-    }
-
-    if ($diffInSeconds < 60) {
-        $s = $diffInSeconds;
-        return "Il y a $s seconde" . ($s > 1 ? "s" : "");
-    }
-
-    $diffInMinutes = floor($diffInSeconds / 60);
-    if ($diffInMinutes < 60) {
-        return "Il y a $diffInMinutes minute" . ($diffInMinutes > 1 ? "s" : "");
-    }
-
-    $diffInHours = floor($diffInMinutes / 60);
-    if ($diffInHours < 24) {
-        return "Il y a $diffInHours heure" . ($diffInHours > 1 ? "s" : "");
-    }
-
-    $diffInDays = floor($diffInHours / 24);
-    if ($diffInDays <= 7) {
-        return "Il y a $diffInDays jour" . ($diffInDays > 1 ? "s" : "");
-    }
-
-    // Affichage complet pour dates anciennes
-    $jours = [
-        'Sunday' => 'Dimanche', 'Monday' => 'Lundi', 'Tuesday' => 'Mardi',
-        'Wednesday' => 'Mercredi', 'Thursday' => 'Jeudi', 'Friday' => 'Vendredi',
-        'Saturday' => 'Samedi'
-    ];
-    $mois = [
-        'January' => 'Janvier', 'February' => 'Février', 'March' => 'Mars',
-        'April' => 'Avril', 'May' => 'Mai', 'June' => 'Juin',
-        'July' => 'Juillet', 'August' => 'Août', 'September' => 'Septembre',
-        'October' => 'Octobre', 'November' => 'Novembre', 'December' => 'Décembre'
-    ];
-
-    $jour = $jours[$date->format('l')] ?? $date->format('l');
-    $moisNom = $mois[$date->format('F')] ?? $date->format('F');
-
-    return "$jour, " . $date->format('j') . " $moisNom " . $date->format('Y');
-}
 
 
     

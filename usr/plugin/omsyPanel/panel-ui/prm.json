@@ -1,0 +1,26 @@
+{
+	"accounts": {
+		"name": "Liste de comptes",
+		"prm": "0000000307"
+	},
+	"account": {
+		"name": "Ajouter un compte",
+		"prm": "0000000307"
+	},
+	"plugin": {
+		"name": "Liste des plugins",
+		"prm": "0000000007"
+	},
+	"template": {
+		"name": "Liste des thèmes",
+		"prm": "0000000007"
+	},
+	"reports": {
+		"name": "Liste des rapports",
+		"prm": "0000000307"
+	},
+	"logs": {
+		"name": "Journal",
+		"prm": "0000000307"
+	}
+}

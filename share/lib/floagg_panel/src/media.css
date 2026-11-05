@@ -1,0 +1,15 @@
+@media (max-width: 500px) {
+	main { margin-left: 0; }
+
+	header.left-bar {
+		left: -100%;
+		transition: .2s;
+	}
+
+	.open-menu header.left-bar {
+		left: 0;
+		transition: .2s;
+	}
+
+	.kit-grid { display: block; }
+}

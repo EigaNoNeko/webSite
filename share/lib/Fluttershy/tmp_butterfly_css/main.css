@@ -1,0 +1,231 @@
+.player-element {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.player-element * {
+	padding: 0;
+	margin: 0;
+
+	box-sizing: border-box;
+}
+
+.player-element svg {
+	color: inherit;
+	fill: inherit;
+
+	pointer-events: none;
+}
+
+.player-element img,
+.player-element video {
+	width: 100%;
+}
+
+.player-element.paused img,
+.player-element.playing img { display: none; }
+
+.player-element img {
+	height: 100%;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.watchpage.videoinfo-open .player-element {
+	border-radius: 8px;
+	overflow: hidden;
+}
+.player-controls-smart {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255, 0, 0, .8);
+	background: linear-gradient(0deg,rgba(0, 0, 0, .8) 0%, transparent 60%);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
+
+	color: #fff;
+	fill: #fff;
+
+	opacity: 1.0;
+}
+
+.player-controls-smart .down-info {
+	padding: 0 16px;
+	padding-bottom: 16px;
+	padding-top: 32px;
+	width: 100%;
+}
+
+.player-element .down-info .progress-timebar {
+	margin-bottom: 16px;
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.player-controls-smart .down-info .player-controls-bar {
+	position: relative;
+	
+	margin-left: 24px;
+	margin-right: 24px;
+	
+	width: 100%;
+}
+
+.player-controls-smart .down-info .progress-timebar #getProgressBarTime {
+	position: absolute;
+	bottom: 16px;
+	transform: translateX(-50%);
+
+	font-size: 12px;
+	
+	padding: 4px 8px;
+	border-radius: 128px;
+	background: #fff;
+	color: #000;
+
+	display: none;
+}
+
+.player-controls-smart .down-info .progress-bar {
+	display: block;
+
+	width: 100%;
+	height: 4px;
+
+	background: rgba(255, 255, 255, .1);
+	border-radius: 128px;
+
+	cursor: pointer;
+}
+
+.player-controls-smart .down-info .progress-bar .currenttime {
+	position: relative;
+	display: block;
+
+	width: 0%;
+	height: 100%;
+
+	background: #fff;
+	border-radius: 128px;
+}
+
+.player-controls-smart .down-info .progress-bar .bufftime {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	display: block;
+
+	width: 0%;
+	height: 100%;
+
+	background: rgba(255, 255, 255, .4);
+	border-radius: 128px;
+}
+
+.player-controls-smart .down-info .progress-bar .currenttime::before {
+	content: "";
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	bottom: 0;
+
+	width: 12px;
+	height: 12px;
+
+	border-radius: 100%;
+
+	background: #ffff;
+}
+
+.player-controls-smart .down-info .item-string span {
+	font-size: 14px;
+	letter-spacing: 0.07em;
+}
+
+.player-controls-smart .down-info .control-time {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.player-controls-smart .down-info .control-time ul {
+	list-style: none;
+
+	display: flex;
+}
+
+.player-controls-smart .down-info .control-time ul li { margin-left: 16px; }
+.player-controls-smart .down-info .control-time ul li:nth-child(1) { margin-left: 0; }
+
+.player-controls-smart .down-info .control-time button:focus,
+.player-controls-smart .down-info .control-time button:hover {
+	background: rgba(255, 255, 255);
+	color: #000;
+	fill: #000;
+}
+.player-controls-smart .down-info .control-time button {
+	border: none;
+	background-color: transparent;
+	padding: 8px;
+	border-radius: 8px;
+
+	cursor: pointer;
+}
+
+.player-controls-smart .down-info .control-time button svg {
+	height: 16px;
+	width: 16px;
+}
+
+.player-element .end-controls {
+	z-index: 1;
+
+	padding: 0 64px;
+}
+
+.player-element .end-controls button:nth-child(1) { margin-left: 0; }
+.player-element .end-controls button {
+	margin-left: 16px;
+	
+	border-radius: 128px;
+	
+	padding: 12px 22px;
+
+	border: none;
+	background-color: rgba(255, 255, 255, .8);
+	color: #000;
+
+	font-weight: 500;
+
+	cursor: pointer;
+}
+
+.player-element .end-controls button:nth-child(1) {
+	background-color: rgba(50, 50, 50, .8);
+	color: #fff;
+}
+
+.player-element .end-controls button:nth-child(1):hover {
+	background-color: rgba(50, 50, 50, 1.0);
+	color: #fff;
+}
+
+.player-element .end-controls button:focus,
+.player-element .end-controls button:hover {
+	background-color: rgba(255, 255, 255, 1.0);
+}
