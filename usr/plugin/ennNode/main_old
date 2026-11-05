@@ -1,0 +1,375 @@
+<?php
+class ennNode {
+    /* */
+    public function getAllObjectChannel($unqid) {
+        $buffImg = ['channel-language' => []];
+        $channelImgSQL = CMS->DataBase->execute('SELECT * FROM pvs_channel_obj WHERE channel_id = ?', [$unqid])->fetchAll();
+        foreach ($channelImgSQL as $key => $value) {
+            $buffImg[$value['type']][$value['name']] = $value['content'];
+        }
+
+        $reqAllTitle = $buffImg['channel-title'];
+        $reqAllDescription = $buffImg['channel-description'];
+        unset($buffImg['channel-title']);
+        unset($buffImg['channel-description']);
+
+        $buffChannelInfo = [];
+        foreach ($reqAllTitle as $key => $value) {
+            $lang = $key;
+            $buffLang[] = $lang;
+
+            $title = $value;
+            $description = $reqAllDescription[$key] ?? '';
+            $buffChannelInfo[$lang] = [
+                'title' => CMS->GFunction->htmlDecode($title),
+                'description' => CMS->GFunction->htmlDecode($description),
+            ];
+        }
+
+        if(isset($buffChannelInfo['french'])) $langId = 'french';
+        else $langId = $buffLang[0] ?? '';
+
+        $buffImg['channel-language'] = [
+            'default' => $langId,
+            'default_item' => $buffChannelInfo[$langId] ?? [],
+            'items' => $buffChannelInfo
+        ];
+
+        return $buffImg;
+    }
+    /* */
+    private function getIp(){
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+
+	public function request($urlRequest, $bodyRequest = []) {
+        $bodyRequest['http_client'] = $this->getIp();
+		$context = NULL;
+		if(isset($bodyRequest)) {
+			$postdata = http_build_query($bodyRequest);
+			$opts = array('http' =>
+			    array(
+			        'method'  => 'POST',
+			        'header'  => 'Content-Type: application/x-www-form-urlencoded',
+			        'content' => $postdata
+			    )
+			);
+			$context  = stream_context_create($opts);
+		}
+		$result = @file_get_contents($urlRequest, false, $context);
+
+		if(!$result)
+			die(json_encode(['meta' => ['stream_get' => $urlRequest, 'message' => 'ERROR de requette', 'data' => $result]]));
+
+		$data = json_decode($result, true);
+		if(!$data) {
+			die(json_encode(['meta' => ['stream_get' => $urlRequest, 'stream_body' => $bodyRequest, 'message' => 'ERROR de reponse', 'data' => $result]]));
+		}
+
+		return $data;
+	}
+	public function informationServerVideo($serverKey) {
+        //$getInfo = CMS->DataBase->execute('SELECT * FROM plug_servers WHERE key_connect = ?', [$serverKey])->fetch();
+        $getInfo = CMS->DataBase->execute('SELECT * FROM plug_server WHERE uniqid = ?', [$serverKey])->fetch();
+
+        return $getInfo;
+    }
+	public function constructAPI($header, $body, $meta = []) {
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        $returnAPI = [
+        	"meta" => $meta,
+            "header" => $header,
+            "body" => $body
+        ];
+        return json_encode($returnAPI);
+    }
+    public function items() {
+        return [
+            [
+                "name" => 'Dashboard',
+                "link" => './',
+                "icon" => '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 176a80 80 0 1080 80 80.24 80.24 0 00-80-80zm172.72 80a165.53 165.53 0 01-1.64 22.34l48.69 38.12a11.59 11.59 0 012.63 14.78l-46.06 79.52a11.64 11.64 0 01-14.14 4.93l-57.25-23a176.56 176.56 0 01-38.82 22.67l-8.56 60.78a11.93 11.93 0 01-11.51 9.86h-92.12a12 12 0 01-11.51-9.53l-8.56-60.78A169.3 169.3 0 01151.05 393L93.8 416a11.64 11.64 0 01-14.14-4.92L33.6 331.57a11.59 11.59 0 012.63-14.78l48.69-38.12A174.58 174.58 0 0183.28 256a165.53 165.53 0 011.64-22.34l-48.69-38.12a11.59 11.59 0 01-2.63-14.78l46.06-79.52a11.64 11.64 0 0114.14-4.93l57.25 23a176.56 176.56 0 0138.82-22.67l8.56-60.78A11.93 11.93 0 01209.94 26h92.12a12 12 0 0111.51 9.53l8.56 60.78A169.3 169.3 0 01361 119l57.2-23a11.64 11.64 0 0114.14 4.92l46.06 79.52a11.59 11.59 0 01-2.63 14.78l-48.69 38.12a174.58 174.58 0 011.64 22.66z"/></svg>',
+                "item" => []
+            ],
+            [
+                "name" => 'System',
+                "link" => '#',
+                "icon" => '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 176a80 80 0 1080 80 80.24 80.24 0 00-80-80zm172.72 80a165.53 165.53 0 01-1.64 22.34l48.69 38.12a11.59 11.59 0 012.63 14.78l-46.06 79.52a11.64 11.64 0 01-14.14 4.93l-57.25-23a176.56 176.56 0 01-38.82 22.67l-8.56 60.78a11.93 11.93 0 01-11.51 9.86h-92.12a12 12 0 01-11.51-9.53l-8.56-60.78A169.3 169.3 0 01151.05 393L93.8 416a11.64 11.64 0 01-14.14-4.92L33.6 331.57a11.59 11.59 0 012.63-14.78l48.69-38.12A174.58 174.58 0 0183.28 256a165.53 165.53 0 011.64-22.34l-48.69-38.12a11.59 11.59 0 01-2.63-14.78l46.06-79.52a11.64 11.64 0 0114.14-4.93l57.25 23a176.56 176.56 0 0138.82-22.67l8.56-60.78A11.93 11.93 0 01209.94 26h92.12a12 12 0 0111.51 9.53l8.56 60.78A169.3 169.3 0 01361 119l57.2-23a11.64 11.64 0 0114.14 4.92l46.06 79.52a11.59 11.59 0 01-2.63 14.78l-48.69 38.12a174.58 174.58 0 011.64 22.66z"/></svg>',
+                "item" => [[
+                    "link" => '#',
+                    'name' => 'Configuration'
+                ],[
+                    "link" => '#',
+                    'name' => 'Mise à jours'
+                ],[
+                    "link" => '#',
+                    'name' => 'Permission'
+                ]]
+            ],
+            [
+                "name" => 'Modération',
+                "link" => '#',
+                "icon" => '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 176a80 80 0 1080 80 80.24 80.24 0 00-80-80zm172.72 80a165.53 165.53 0 01-1.64 22.34l48.69 38.12a11.59 11.59 0 012.63 14.78l-46.06 79.52a11.64 11.64 0 01-14.14 4.93l-57.25-23a176.56 176.56 0 01-38.82 22.67l-8.56 60.78a11.93 11.93 0 01-11.51 9.86h-92.12a12 12 0 01-11.51-9.53l-8.56-60.78A169.3 169.3 0 01151.05 393L93.8 416a11.64 11.64 0 01-14.14-4.92L33.6 331.57a11.59 11.59 0 012.63-14.78l48.69-38.12A174.58 174.58 0 0183.28 256a165.53 165.53 0 011.64-22.34l-48.69-38.12a11.59 11.59 0 01-2.63-14.78l46.06-79.52a11.64 11.64 0 0114.14-4.93l57.25 23a176.56 176.56 0 0138.82-22.67l8.56-60.78A11.93 11.93 0 01209.94 26h92.12a12 12 0 0111.51 9.53l8.56 60.78A169.3 169.3 0 01361 119l57.2-23a11.64 11.64 0 0114.14 4.92l46.06 79.52a11.59 11.59 0 01-2.63 14.78l-48.69 38.12a174.58 174.58 0 011.64 22.66z"/></svg>',
+                "item" => [[
+                    "link" => './members',
+                    'name' => 'Accounts'
+                ],[
+                    "link" => './signale',
+                    'name' => 'Plainte'
+                ],[
+                    "link" => '#',
+                    'name' => 'Channels'
+                ],[
+                    "link" => '#',
+                    'name' => 'Watchs'
+                ],[
+                    "link" => '#',
+                    'name' => 'Blacklist'
+                ]]
+            ],
+            [
+                "name" => 'Personnalisation',
+                "link" => '#',
+                "icon" => '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 176a80 80 0 1080 80 80.24 80.24 0 00-80-80zm172.72 80a165.53 165.53 0 01-1.64 22.34l48.69 38.12a11.59 11.59 0 012.63 14.78l-46.06 79.52a11.64 11.64 0 01-14.14 4.93l-57.25-23a176.56 176.56 0 01-38.82 22.67l-8.56 60.78a11.93 11.93 0 01-11.51 9.86h-92.12a12 12 0 01-11.51-9.53l-8.56-60.78A169.3 169.3 0 01151.05 393L93.8 416a11.64 11.64 0 01-14.14-4.92L33.6 331.57a11.59 11.59 0 012.63-14.78l48.69-38.12A174.58 174.58 0 0183.28 256a165.53 165.53 0 011.64-22.34l-48.69-38.12a11.59 11.59 0 01-2.63-14.78l46.06-79.52a11.64 11.64 0 0114.14-4.93l57.25 23a176.56 176.56 0 0138.82-22.67l8.56-60.78A11.93 11.93 0 01209.94 26h92.12a12 12 0 0111.51 9.53l8.56 60.78A169.3 169.3 0 01361 119l57.2-23a11.64 11.64 0 0114.14 4.92l46.06 79.52a11.59 11.59 0 01-2.63 14.78l-48.69 38.12a174.58 174.58 0 011.64 22.66z"/></svg>',
+                "item" => [[
+                    "link" => './template',
+                    'name' => 'Template'
+                ],[
+                    "link" => './plugin',
+                    'name' => 'Plugins'
+                ]]
+            ]
+        ]; 
+    }
+
+    public function AllChannel($order = 'ASC') {
+        if($order == 'ASC') {
+            return CMS->DataBase->execute('SELECT * FROM pvs_channel ORDER BY ID ASC')->fetchAll(); //[];
+        }
+        if($order == 'DESC') {
+            return CMS->DataBase->execute('SELECT * FROM pvs_channel ORDER BY ID DESC')->fetchAll(); //[];
+        }
+    }
+
+    public function getLangueItems($channel) {
+        $reqAllTitle = CMS->DataBase->execute(
+            'SELECT * FROM pvs_channel_obj WHERE channel_id = ? AND type = "channel-title" AND content != ""',
+            [$channel]
+        )->fetchAll();
+        $reqAllDescription = CMS->DataBase->execute(
+            'SELECT * FROM pvs_channel_obj WHERE channel_id = ? AND type = "channel-description" AND content != ""',
+            [$channel]
+        )->fetchAll();
+
+        $buffLang = [];
+        $buffChannelInfo = [];
+        foreach ($reqAllTitle as $key => $value) {
+            $lang = $value['name'];
+            $buffLang[] = $lang;
+
+            $title = $value['content'];
+            $description = CMS->GFunction->htmlDecode($reqAllDescription[$key]['content'] ?? '');
+            $buffChannelInfo[$lang] = [
+                'title' => $title,
+                'description' => $description,
+            ];
+        }
+
+        if(isset($buffChannelInfo['french'])) $langId = 'french';
+        else $langId = $buffLang[0] ?? '';
+
+        return [
+            'default' => $langId,
+            'default_item' => $buffChannelInfo[$langId] ?? [],
+            'items' => $buffChannelInfo
+        ];
+    }
+
+    public $keyToText = [
+        'vo' => "Version original",
+        'vf' => "Version française",
+        've' => "Version anglaise",
+
+        'vjst' => "Version japonaise",
+        'vostfr' => "Version original - fr",
+        'vosten' => "Version original - en",
+    ];
+
+    public $langUpdate = [
+        'french' => [
+            'continueWatching' => "Continuer à regarder",
+            'newEpisodesAdded' => "Nouveaux episodes",
+            'mostWatched' => "Les plus regarder",
+            'theClassic' => "Les classics"
+        ],
+        'english' => [
+            'continueWatching' => "Continue watching",
+            'newEpisodesAdded' => "New episodes added",
+            'mostWatched' => "Most watched",
+            'theClassic' => "The classic"
+        ]
+    ];
+
+    public function langVideo($lang) {
+        $l = ['vf', 'fr', 'vostfr'];
+        switch($lang) {
+            case 'french':
+                $l = ['vf', 'fr', 'vostfr'];
+                break;
+            case 'english':
+                $l = ['ve', 'en', 'vosta'];
+                break;
+        }
+
+        return $l;
+    }
+
+    public function langToText($id) {
+        $lang = $_COOKIE['lang'] ?? 'french';
+        if(!$this->langUpdate[$lang]) $lang = 'french';
+
+        if($this->langUpdate[$lang][$id]) return $langUpdate[$lang][$id];
+        return $id;
+    }
+
+
+
+
+
+    /* RESET MAIN.PHP */
+    /*
+     *
+     *
+     *
+     */
+    public function getChannel($channel) {
+        $channelInfo = [];
+        $videoChannel = [];
+        $rowSaison = 1;
+
+        $saisonActive = 1;
+        if($saisonActive == 0) $saisonActive = 1;
+        if($saisonActive > $rowSaison) $saisonActive = $rowSaison;
+
+        $channelInfo = CMS->DataBase->execute('SELECT * FROM pvs_channel WHERE uniqid = ?', [$channel])->fetchAll();
+        $channelInfo = $channelInfo[0];
+        $channelMergeBuff = $this->getAllObjectChannel($channelInfo['uniqid']);
+        $getAllView = CMS->DataBase->execute('SELECT * FROM system_viewpage WHERE page LIKE ? ORDER BY ID DESC', ['%'.$channelInfo['uniqid'].'%'])->fetchAll();
+
+        if(!isset($channelMergeBuff['playlist'])) $channelMergeBuff['playlist'] = ['id' => ''];
+
+        $arrChannelLang = $channelMergeBuff['channel-language'];
+        $channelInfo = array_merge(
+            $channelInfo,
+            $channelMergeBuff,
+            [
+                'title' => $arrChannelLang['default_item']['title'] ?? "",
+                'description' => $arrChannelLang['default_item']['description'] ?? "",
+            ]
+        );
+        $buffImg = $channelInfo['img'];
+
+        $videoChannel = CMS->DataBase->execute("SELECT * FROM pvs_watch WHERE channel_id = ? ORDER BY cannal, title ASC", [$channelInfo['uniqid']])->fetchAll();
+        $listEpisode = [];
+        $newListeEpisode = [];
+
+        $i=0;
+        foreach ($videoChannel as $value) {
+            if(!isset($listEpisode[$value['cannal']][$value['uniqid']])) $listEpisode[$value['cannal']][$value['uniqid']] = true;
+
+            // Counting implémente
+            if(intval($value['cannal']) > $rowSaison) $rowSaison = intval($value['cannal']);
+
+            if($value['cannal'] == $saisonActive && $i < 6) {
+                if(!isset($newListeEpisode[$value['uniqid']])) $i++;
+                $newListeEpisode[$value['uniqid']] = [
+                    "id" => $value['uniqid'],
+                    "title" => 'Episode '.$value['title'],
+                    "thumbnail" => $this->jsonParse($value['thumbnail']) ?? null,
+                    "lang" => []
+                ];
+            }
+        }
+        // Appeler la fonction pour chaque parent requis
+        $kidsChannel = [];
+        $kidsChannel = array_merge($kidsChannel, $this->fetchChannelData($channelInfo['uniqid'], 'parent_', $channelInfo['uniqid']));
+        $kidsChannel = array_merge($kidsChannel, $this->fetchChannelData($channelInfo['parent_'], 'parent_', $channelInfo['uniqid']));
+        $kidsChannel = array_merge($kidsChannel, $this->fetchChannelData($channelInfo['parent_'], 'uniqid', $channelInfo['uniqid']));
+
+        $countEp = 0;
+        if(isset($listEpisode[$saisonActive])) $countEp = (count($listEpisode[$saisonActive]) - $i);
+
+        $newBuffCaching = [
+            'channel' => $channelInfo['uniqid'],
+            'catagorie' => explode(',', $channelInfo['categorie']),
+            'kids' => $kidsChannel,
+            'uniqid' => $channelInfo['uniqid'],
+            'parent' => $channelInfo['parent_'],
+            'count_view' => count($getAllView),
+            'count_saison' => $rowSaison,
+            'count_episode' => count($videoChannel),
+
+            'title' => CMS->GFunction->htmlDecode($arrChannelLang['default_item']['title'] ?? ""),
+            'description' => nl2br(CMS->GFunction->htmlDecode($arrChannelLang['default_item']['description'] ?? "")),
+            'images' => $channelInfo['img'],
+
+            'resteCount' => $countEp,
+            'videos' => $newListeEpisode,
+
+            'episode' => count($videoChannel),
+            'saison' => $rowSaison,
+
+            'publication' => []
+        ];
+
+        $getPlaylist = CMS->DataBase->execute('SELECT * FROM plug_playlist_content WHERE play_id = ?', [$channelMergeBuff['playlist']['id']])->fetchAll() ?? [];
+        foreach ($getPlaylist as $key => $value) {
+            $newBuffCaching['publication'][] = CMS->DataBase->execute('SELECT * FROM blog_single WHERE ID = ?', [$value['content']])->fetchAll()[0];
+        }
+
+        return $newBuffCaching;
+    }
+
+    public function fetchChannelData($parentId, $parent = 'parent_', $ign = '') {
+        $channels = CMS->DataBase->execute("SELECT * FROM pvs_channel WHERE $parent = ? AND $parent != 'null' ", [$parentId])->fetchAll();
+        $kidsChannel = [];
+
+        if (!empty($channels)) {
+            foreach ($channels as $value) {
+                // Fusionner les données supplémentaires avec le channel
+                $value = array_merge($value, $this->getAllObjectChannel($value['uniqid']));
+
+                // Récupérer la langue par défaut et les informations du channel
+                $arrChannelLangForeach = $value['channel-language'];
+                $langId = $arrChannelLangForeach['default'];
+                $buffChannelInfo = $arrChannelLangForeach['items'];
+
+                if($ign === $value['uniqid']) continue;
+
+                // Ajouter l'élément au tableau final
+                $kidsChannel[] = [
+                    "id" => $value['uniqid'],
+                    "slug" => $value['slug_'],
+                    "categorie" => $value['categorie'],
+                    "title" => html_entity_decode($buffChannelInfo[$langId]['title']),
+                    "thumbnail" => $value['img']
+                ];
+            }
+        }
+
+        return $kidsChannel;
+    }
+
+    public function jsonParse($string) {
+        $st = html_entity_decode(htmlspecialchars_decode($string));
+        return json_decode($st, true);
+    }
+}

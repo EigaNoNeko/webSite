@@ -1,0 +1,37 @@
+{
+	"channels": {
+		"name": "Tout les catalogues",
+		"prm": "0000030307"
+	},
+	"channel": {
+		"name": "Ajouter un catalogue",
+		"prm": "0000030307"
+	},
+	"sync_information": {
+		"name": "Synchroniser les informations",
+		"prm": "0000000307"
+	},
+	"user_request": {
+		"name": "Demande utilisateurs",
+		"prm": "0000000307"
+	},
+	"watchs": {
+		"hidden": true,
+		"url": "watchs",
+		"prm": "0000030307"
+	},
+	"watch": {
+		"hidden": true,
+		"url": "watch",
+		"prm": "0000030307"
+	},
+	"tv": {
+		"url": "watch",
+		"prm": "0707030307"
+	},
+
+	"broadcast": {
+		"url": "broadcast",
+		"prm": "0707030307"
+	}
+}
