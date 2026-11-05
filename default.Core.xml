@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<omsy>
+		<env>local</env>
+		<version>1.0.4.0</version>
+		<includes>
+			<item>
+				<type>class</type>
+				<src>OmsySecurity</src>
+			</item>
+			<item>
+				<type>class</type>
+				<src>OmsySql</src>
+			</item>
+			<item>
+				<type>class</type>
+				<src>OmsyPermission</src>
+			</item>
+			<item>
+				<type>class</type>
+				<src>OmsySession</src>
+			</item>
+			<!-- <item>
+				<type>class</type>
+				<src>OmsyLog</src>
+			</item> -->
+			<item>
+				<type>class</type>
+				<src>OmsyPlugin</src>
+			</item>
+			<item>
+				<type>class</type>
+				<src>OmsyInterface</src>
+			</item>
+			<item>
+				<type>class</type>
+				<src>OmsyCache</src>
+			</item>
+			<item>
+				<type>function</type>
+				<src>GFunction</src>
+			</item>
+			<item>
+				<type>module</type>
+				<src>OmsyPHPMailer</src>
+			</item>
+		</includes>
+		<init>
+			<session.cookie_httponly>True</session.cookie_httponly>
+			<session.cookie_secure>1</session.cookie_secure>
+			<memory_limit>800M</memory_limit>
+			<display_errors>1</display_errors>
+
+			<access_admin>true</access_admin>
+
+			<uri_access_admin>panel</uri_access_admin>
+			<folder_access_admin>panel</folder_access_admin>
+
+			<logs>share/_</logs>
+		</init>
+		<laff>
+			share/_
+		</laff>
+	</omsy>
+	<database>
+		<server>MySql</server>
+		<host>127.0.0.1</host>
+		<username>root</username>
+		<password></password>
+		<dbname></dbname>
+	</database>
+	<redis>
+		<host>127.0.0.1</host>
+		<username>root</username>
+		<password></password>
+		<dbname></dbname>
+	</redis>
+	<template>
+		<version>1.0.5-alpha</version>
+		<title></title>
+		<folder>enn</folder>
+		<plugins>omsyPanel,omsyBlog,ennNode,EigaNoNeko</plugins>
+	</template>
+	<security>
+		<eval>false</eval>
+		<exec>true</exec>
+		<system>false</system>
+		<passthru>false</passthru>
+	</security>
+	<server>
+		<privatekey/>
+		<saltkey/>
+		<update>https://packages.floagg.com/</update>
+	</server>
+	<applications>
+	</applications>
+</configuration>
